@@ -1,10 +1,11 @@
 import React from 'react'
-import { StyleSheet, Text, View } from 'react-native'
+import { ActivityIndicator, StyleSheet, Text, View } from 'react-native'
 
 export default function Loading() {
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>Getting the fucking weather</Text>
+      <Text style={styles.loader}>데이터를 불러오는 중...</Text>
+      <ActivityIndicator size="large" />
     </View>
   )
 }
@@ -12,13 +13,14 @@ export default function Loading() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'flex-end',
-    paddingHorizontal: 30,
-    paddingVertical: 100,
-    backgroundColor: '#FDF6AA'
+    backgroundColor: 'black',
+    alignItems: 'center',
+    justifyContent: 'center'
   },
-  text: {
-    color: '#2c2c2c',
-    fontSize: 30
+  loader: {
+    color: 'white',
+    fontSize: 20,
+    paddingBottom: 15,
+    fontWeight: 'bold'
   }
 })
