@@ -4,12 +4,18 @@ import * as Location from 'expo-location'
 import { Alert, View, Text, StyleSheet } from 'react-native'
 
 interface State {
-  isLoading: boolean
+  isLoading: boolean,
+  condition: any,
+  temp: any
 }
+
+const api_key = process.env.API_KEY
 
 export default class extends React.Component {
   state: State = {
-    isLoading: true
+    isLoading: true,
+    condition: null,
+    temp: null
   }
 
   getData = async() => {
