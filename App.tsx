@@ -1,12 +1,17 @@
 import React from 'react'
-import Loading from './components/Loading'
+import Loading from './pages/Loading'
 import * as Location from 'expo-location'
-import { Alert, View, Text, StyleSheet } from 'react-native'
+import { Alert } from 'react-native'
+import Home from './pages/Home'
+import axios from 'axios'
 
 interface State {
-  isLoading: boolean,
-  condition: any,
-  temp: any
+  isLoading: boolean
+  condition: string
+  temp: number
+  latitude: number
+  longitude: number,
+  city: string
 }
 
 const api_key = process.env.API_KEY
@@ -14,53 +19,63 @@ const api_key = process.env.API_KEY
 export default class extends React.Component {
   state: State = {
     isLoading: true,
-    condition: null,
-    temp: null
+    condition: '',
+    temp: 0,
+    latitude: 0,
+    longitude: 0,
+    city: ''
   }
 
-  getData = async() => {
+  getWeather = async (latitude: number, longitude: number) => {
+    const {
+      data: {
+        main: { temp },
+        weather,
+        name
+      }
+    } = await axios.get(
+      `http://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${api_key}&units=metric`
+    )
+    this.setState({
+      isLoading: false,
+      condition: weather[0].main,
+      temp,
+      city: name
+    })
+  }
+
+  getData = async () => {
     try {
-      const response = await Location.requestForegroundPermissionsAsync()
-      console.log(response)
-      const location = await Location.getCurrentPositionAsync()
-      console.log(location)
+      await Location.requestForegroundPermissionsAsync()
+      const {
+        coords: { latitude, longitude }
+      } = await Location.getCurrentPositionAsync()
+      this.getWeather(latitude, longitude)
+      this.setState({
+        latitude: latitude,
+        longitude: longitude
+      })
     } catch (errror) {
       Alert.alert('위치 정보를 가져오는 것에 실패하였습니다.\n권한에 동의하여 주세요.')
     }
-
-    this.setState({
-      isLoading: false
-    })
   }
-  
+
   componentDidMount() {
     this.getData()
   }
 
   render() {
-    const { isLoading } = this.state
+    const { isLoading, temp, condition, latitude, longitude, city } = this.state
     return isLoading ? (
       <Loading />
     ) : (
-      <View style={styles.continer}>
-        <Text style={styles.text}>
-          ㅎㅇ
-        </Text>
-      </View>
+      <Home
+        temp={temp}
+        condition={condition}
+        latitude={latitude}
+        longitude={longitude}
+        city={city}
+      />
     )
   }
 }
-
-const styles = StyleSheet.create({
-  continer: {
-    flex: 1,
-    backgroundColor: 'black',
-    alignItems: 'center',
-    justifyContent: 'center'
-  },
-  text: {
-    color: 'white',
-    fontWeight: 'bold',
-    fontSize: 36
-  }
-})
