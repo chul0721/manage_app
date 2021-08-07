@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Text, StyleSheet } from 'react-native'
+import { Alert, View, Text, StyleSheet, TouchableOpacity } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import { weather } from '../components/WeatherData'
 import { homeProps } from '../typings/homeProps'
@@ -9,7 +9,13 @@ const Home: React.FC<homeProps> = ({ temp, condition, latitude, longitude, city 
     <View style={styles.continer}>
       <View style={styles.weather}>
         <View style={styles.bigstate}>
-          <Icon name={weather[condition].icon} size={50} color="#999" />
+          <TouchableOpacity onPress={
+            () => {
+              Alert.alert('버튼이 클릭되었습니다.')
+            }
+          }>
+            <Icon name={weather[condition].icon} size={50} color="#999" />
+          </TouchableOpacity>
           <Text style={styles.state}>
             {weather[condition].title}
           </Text>

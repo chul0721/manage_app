@@ -9,6 +9,7 @@
     "format": "yarn prettier --write ."
   },
   "dependencies": {
+    "@react-native-async-storage/async-storage": "~1.15.0",
     "axios": "^0.21.1",
     "dotenv": "^10.0.0",
     "expo": "~42.0.1",
