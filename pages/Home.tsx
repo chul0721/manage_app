@@ -1,6 +1,6 @@
 import React from 'react'
 import { View, Text, StyleSheet } from 'react-native'
-import { Icon } from 'react-native-elements'
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import { weather } from '../components/WeatherData'
 import { homeProps } from '../typings/homeProps'
 
@@ -8,11 +8,14 @@ const Home: React.FC<homeProps> = ({ temp, condition, latitude, longitude, city 
   return (
     <View style={styles.continer}>
       <View style={styles.weather}>
+        <View style={styles.bigstate}>
+          <Icon name={weather[condition].icon} size={50} color="#999" />
+          <Text style={styles.state}>
+            {weather[condition].title}
+          </Text>
+        </View>
         <Text style={styles.temp}>
           {city}, {Math.round(temp)}°C
-        </Text>
-        <Text style={styles.state}>
-          {weather[condition].title}
         </Text>
         <Text style={styles.recommend}>
           {weather[condition].content[Math.floor(Math.random() * weather[condition].content.length)]}
@@ -27,6 +30,9 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: 'black'
   },
+  bigstate: {
+
+  },
   weather: {
     alignItems: 'flex-end',
     top: 32,
@@ -40,12 +46,12 @@ const styles = StyleSheet.create({
   state: {
     color: 'white',
     fontWeight: 'bold',
-    fontSize: 24
+    fontSize: 26
   },
   recommend: {
     color: 'white',
     fontWeight: 'bold',
-    fontSize: 24
+    fontSize: 17
   }
 })
 
