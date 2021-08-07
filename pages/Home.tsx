@@ -1,5 +1,6 @@
 import React from 'react'
 import { View, Text, StyleSheet } from 'react-native'
+import { Icon } from 'react-native-elements'
 import { weather } from '../components/WeatherData'
 import { homeProps } from '../typings/homeProps'
 

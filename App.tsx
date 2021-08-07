@@ -4,7 +4,6 @@ import * as Location from 'expo-location'
 import { Alert } from 'react-native'
 import Home from './pages/Home'
 import axios from 'axios'
-import useFonts from './utils/useFonts'
 
 interface State {
   isLoading: boolean
@@ -63,7 +62,6 @@ export default class App extends React.Component {
 
   componentDidMount() {
     this.getData()
-    useFonts()
   }
 
   render() {
